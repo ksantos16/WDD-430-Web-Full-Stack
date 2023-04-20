@@ -1,0 +1,25 @@
+{
+  "devDependencies": {
+    "typescript": "^5.0.4"
+  },
+  "dependencies": {
+    "g": "^2.0.1"
+  },
+  "name": "wdd-430-web-full-stack",
+  "description": "WDD 430: Web Full-Stack",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ksantos16/WDD-430-Web-Full-Stack.git"
+  },
+  "author": "Kira Santos",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ksantos16/WDD-430-Web-Full-Stack/issues"
+  },
+  "homepage": "https://github.com/ksantos16/WDD-430-Web-Full-Stack#readme"
+}
