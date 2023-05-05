@@ -8,7 +8,7 @@ import { Component } from '@angular/core';
 export class AppComponent {
   loadedFeature = 'recipe';
 
-  onNavigate(feature: string){
+  switchView(feature: string){
     this.loadedFeature = feature;
   }
 
