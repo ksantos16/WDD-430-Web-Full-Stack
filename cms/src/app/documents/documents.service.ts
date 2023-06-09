@@ -42,7 +42,7 @@ export class DocumentsService {
   }
 
   getMaxId(): number{
-    const maxId = 0
+    let maxId = 0
 
     for(let document of this.documents){
       const currentId = +document.id;
@@ -55,7 +55,7 @@ export class DocumentsService {
 
   addDocument(newDocument: Document) {
     if(newDocument === undefined || null){
-      return;
+      return newDocument;
     }
     this.maxDocumentId++;
     newDocument.id=this.maxDocumentId.toString();
@@ -67,11 +67,11 @@ export class DocumentsService {
 
   updateDocument(originalDocument: Document, newDocument: Document){
     if(originalDocument || newDocument === undefined || null){
-      return;
+      return originalDocument;
     }
     const pos = this.documents.indexOf(originalDocument);
     if(pos < 0 ){
-      return;
+      return pos;
     }
 
     newDocument.id = originalDocument.id;
