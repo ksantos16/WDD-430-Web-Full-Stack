@@ -35,7 +35,7 @@
         </div>
       </div>
 
-      <div *ngIf="(email.touched && !email.valid)" class="alert alert-danger">Enter a valid Email address.</div>
+      <div *ngIf="email.touched && email.invalid" class="alert alert-danger">Enter a valid Email address.</div>
 
       <div class="row">
         <div class="col-sm-12 form-group">
@@ -52,7 +52,7 @@
             max="255">
         </div>
       </div>
-      <div *ngIf="(phone.touched && !phone.valid)" class="alert alert-danger">Enter a valid phone number.</div>
+      <div *ngIf="phone.touched && phone.invalid" class="alert alert-danger">Enter a valid phone number.</div>
 
       <div class="row">
         <div class="col-sm-12 form-group">

@@ -51,6 +51,17 @@ export class ContactEditComponent implements OnInit{
       });
   }
 
+  onCancel() {
+    this.router.navigate(['/contacts']);
+  }
+
+  onRemoveItem(index: number) {
+    if (index < 0 || index >= this.groupContacts.length) {
+       return;
+    }
+    this.groupContacts.splice(index, 1);
+  }
+
   onSubmit(form: NgForm) {
     const value = form.value;
     const newContact = new Contact(
@@ -59,7 +70,9 @@ export class ContactEditComponent implements OnInit{
       value.email,
       value.phone,
       value.imageUrl,
-      value.group);
+      this.groupContacts
+      );
+
     if (this.editMode) {
       this.contactService.updateContact(this.originalContact, newContact);
     } else {
@@ -67,11 +80,6 @@ export class ContactEditComponent implements OnInit{
     }
     this.router.navigate(['/contacts']);
   }
-
-  onCancel() {
-    this.router.navigate(['/contacts']);
-  }
-
 
 isInvalidContact(newContact: Contact) {
   if (!newContact) {// newContact has no value
@@ -92,18 +100,12 @@ isInvalidContact(newContact: Contact) {
 addToGroup($event: any) {
   const selectedContact: Contact = $event.dragData;
   const invalidGroupContact = this.isInvalidContact(selectedContact);
+
   if (invalidGroupContact){
      return;
   }
   this.groupContacts.push(selectedContact);
 }
 
-
-onRemoveItem(index: number) {
-  if (index < 0 || index >= this.groupContacts.length) {
-     return;
-  }
-  this.groupContacts.splice(index, 1);
-}
 
 }
