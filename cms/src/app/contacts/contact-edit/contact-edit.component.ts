@@ -67,11 +67,11 @@ export class ContactEditComponent implements OnInit{
     } else {
       this.contactService.addContact(newContact);
     }
-    this.router.navigate(['/contact']);
+    this.router.navigate(['/contacts']);
   }
 
   onCancel() {
-    this.router.navigate(['/contact']);
+    this.router.navigate(['/contacts']);
   }
 
 

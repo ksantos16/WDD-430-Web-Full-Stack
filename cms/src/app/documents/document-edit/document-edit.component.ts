@@ -47,11 +47,11 @@ export class DocumentEditComponent implements OnInit{
     } else {
       this.documentService.addDocument(newDocument);
     }
-    this.router.navigate(['/document']);
+    this.router.navigate(['/documents']);
   }
 
   onCancel() {
-    this.router.navigate(['/document']);
+    this.router.navigate(['/documents']);
   }
 
 }
