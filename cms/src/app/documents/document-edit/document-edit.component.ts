@@ -28,9 +28,7 @@ export class DocumentEditComponent implements OnInit{
           this.editMode = false;
           return
         }
-        this.documentService.getDoument(this.id)
-        .subscribe(documentData => {
-          this.orginalDocument = documentData.document;
+        this.orginalDocument = this.documentService.getDoument(this.id)
 
           if(!this.orginalDocument) {
             return
@@ -38,7 +36,6 @@ export class DocumentEditComponent implements OnInit{
           this.editMode = true;
           this.document = JSON.parse(JSON.stringify(this.orginalDocument));
 
-        });
       });
   }
 

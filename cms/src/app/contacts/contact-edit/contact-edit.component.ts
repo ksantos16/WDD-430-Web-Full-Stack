@@ -31,9 +31,9 @@ export class ContactEditComponent implements OnInit{
           return;
         }
 
-       this.contactService.getContact(this.id)
-       .subscribe(contactData => {
-        this.originalContact = contactData.contact;
+       this.originalContact = this.contactService.getContact(this.id)
+
+
 
         if(!this.originalContact) {
           return
@@ -49,7 +49,7 @@ export class ContactEditComponent implements OnInit{
             JSON.stringify(this.originalContact.group)
           );
         }
-       });
+
       });
   }
 
