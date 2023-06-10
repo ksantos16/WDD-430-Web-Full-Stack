@@ -47,15 +47,15 @@ export class DocumentsService {
     for(let document of this.documents){
       const currentId = +document.id;
       if(currentId > maxId) {
-        maxId;
+        maxId = currentId;
       }
     }
     return maxId;
   }
 
   addDocument(newDocument: Document) {
-    if(newDocument === undefined || null){
-      return newDocument;
+    if(!newDocument){
+      return;
     }
     this.maxDocumentId++;
     newDocument.id=this.maxDocumentId.toString();
@@ -66,12 +66,12 @@ export class DocumentsService {
   }
 
   updateDocument(originalDocument: Document, newDocument: Document){
-    if(originalDocument || newDocument === undefined || null){
-      return originalDocument;
+    if(!originalDocument || !newDocument){
+      return;
     }
     const pos = this.documents.indexOf(originalDocument);
     if(pos < 0 ){
-      return pos;
+      return;
     }
 
     newDocument.id = originalDocument.id;

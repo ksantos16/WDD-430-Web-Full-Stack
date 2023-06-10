@@ -43,19 +43,19 @@ export class ContactService {
   }
 
   getMaxId(): number{
-    const maxId = 0
+    let maxId = 0
 
     for(let contact of this.contacts){
       const currentId = +contact.id;
       if(currentId > maxId) {
-        maxId;
+        maxId = currentId;
       }
     }
     return maxId;
   }
 
   addContact(newContact: Contact) {
-    if(newContact === undefined || null){
+    if(!newContact){
       return;
     }
     this.maxContactId++;
@@ -67,7 +67,7 @@ export class ContactService {
   }
 
   updateDocument(originalContact: Contact, newContact: Contact){
-    if(originalContact || newContact === undefined || null){
+    if(!originalContact || !newContact){
       return;
     }
     const pos = this.contacts.indexOf(originalContact);

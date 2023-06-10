@@ -48,7 +48,7 @@
         </div>
       </div>
 
-      <div *ngIf="!name.valid || !url.valid" class="alert alert-danger">The Document Title and Document URL are required fields</div>
+      <div class="alert alert-danger" *ngIf="(!name.valid && name.touched) || (url.invalid && url.touched)">The Document Title and Document URL are required fields</div>
 
       <div class="row">
         <div class="col-xs-12 btn-toolbar">

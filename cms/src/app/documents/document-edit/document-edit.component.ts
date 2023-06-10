@@ -23,18 +23,22 @@ export class DocumentEditComponent implements OnInit{
     this.route.params
     .subscribe(
       (params: Params) => {
-        this.id = params.id;
+        this.id = params['id'];
         if(!this.id) {
-          return this.editMode = false
+          this.editMode = false;
+          return
         }
-        this.orginalDocument = this.documentService.getDoument(this.id);
+        this.documentService.getDoument(this.id)
+        .subscribe(documentData => {
+          this.orginalDocument = documentData.document;
 
-        if(!this.orginalDocument) {
-          return this.orginalDocument
-        }
-        this.editMode = true;
-        this.document = JSON.parse(JSON.stringify(this.orginalDocument));
+          if(!this.orginalDocument) {
+            return
+          }
+          this.editMode = true;
+          this.document = JSON.parse(JSON.stringify(this.orginalDocument));
 
+        });
       });
   }
 
@@ -46,11 +50,11 @@ export class DocumentEditComponent implements OnInit{
     } else {
       this.documentService.addDocument(newDocument);
     }
-    this.router.navigate(['../'], {relativeTo: this.route});
+    this.router.navigate(['/document']);
   }
 
   onCancel() {
-    this.router.navigate(['../'], {relativeTo: this.route});
+    this.router.navigate(['/document']);
   }
 
 }
