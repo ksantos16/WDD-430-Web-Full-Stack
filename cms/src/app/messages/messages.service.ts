@@ -1,68 +1,45 @@
-import { MOCKMESSAGES } from './MOCKMESSAGES';
 import { Message } from './message.model';
 import { Injectable, EventEmitter } from '@angular/core';
-import {
-  ActivatedRouteSnapshot,
-  Resolve,
-  RouterStateSnapshot,
-} from '@angular/router';
+
 import { Observable, map, Subject } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
+import { MOCKMESSAGES } from './MOCKMESSAGES';
 @Injectable({
   providedIn: 'root',
 })
 export class MessagesService {
   messages: Message[] = [];
-  // messageChangedEvent = new EventEmitter<Message[]>();
   messageChangedEvent = new Subject<Message[]>();
-  maxMessageId: number;
 
-  constructor(private http: HttpClient) {
-    // this.messages = MOCKMESSAGES;
-    this.maxMessageId = this.getMaxId();
-  }
+  constructor(private http: HttpClient) {}
 
-  getMaxId(): number {
-    let maxId = 0;
-
-    for (let message of this.messages) {
-      const currentId = +message.id;
-      if (currentId > maxId) {
-        maxId = currentId;
-      }
-    }
-    return maxId;
-  }
-
-  storeMessages() {
-    const messagesListClone = JSON.parse(JSON.stringify(this.messages));
-    const headers = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        Authorization: 'my-auth-token',
-      }),
-    };
-    this.http
-      .put<Message[]>(
-        'https://cms-project-511d5-default-rtdb.firebaseio.com/messages.json',
-        messagesListClone,
-        headers
-      )
-      .subscribe({
-        next: (n) => {
-          this.messages = n;
-        },
-        error: (e) => console.error(e),
-        complete: () => {
-          this.messageChangedEvent.next(this.messages.slice());
-        },
-      });
+  send() {
+    this.messageChangedEvent.next(this.messages.slice());
   }
 
   addMessage(message: Message) {
-    this.messages.push(message);
-    this.storeMessages();
+    if (!message) {
+      return;
+    }
+
+    // make sure id of the new Document is empty
+    message.id = '';
+
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+
+    // add to database
+    this.http
+      .post<{ message: string; messages: Message }>(
+        'http://localhost:3000/messages',
+        this.messages,
+        { headers: headers }
+      )
+      .subscribe((responseData) => {
+        // add new document to documents
+        this.messages.push(responseData.messages);
+        this.send();
+      });
   }
 
   getMessage(id: string): Message {
@@ -73,34 +50,19 @@ export class MessagesService {
   //   return this.messages.slice();
   // }
 
-  getMessages(): Message[] {
+  getMessages() {
     this.http
-      .get<Message[]>(
-        'https://cms-project-511d5-default-rtdb.firebaseio.com/messages.json'
-      )
-      .pipe(
-        map((responseData) => {
-          const messages: Message[] = [];
-          for (const key in responseData) {
-            if (responseData.hasOwnProperty(key)) {
-              messages.push({ ...responseData[key], id: key });
-            }
-          }
-          return messages;
-        })
+      .get<{ message: string; messages: Message[] }>(
+        'http://localhost:3000/messages'
       )
       .subscribe(
-        // success method
-        (messages: Message[]) => {
-          this.messages = messages;
-          this.maxMessageId = this.getMaxId();
-          return this.messageChangedEvent.next(this.messages.slice());
+        (responseData) => {
+          this.messages = responseData.messages;
+          this.send();
         },
-        // error method
         (error: any) => {
           console.log(error);
         }
       );
-    return this.messages.slice();
   }
 }

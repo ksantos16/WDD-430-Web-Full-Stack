@@ -6,29 +6,29 @@ import { ContactService } from '../contacts.service';
 @Component({
   selector: 'cms-contact-detail',
   templateUrl: './contact-detail.component.html',
-  styleUrls: ['./contact-detail.component.css']
+  styleUrls: ['./contact-detail.component.css'],
 })
 export class ContactDetailComponent implements OnInit {
   contact: Contact;
   id: string;
 
-  constructor(private contactService: ContactService,
-              private route: ActivatedRoute,
-              private router: Router) { }
+  constructor(
+    private contactService: ContactService,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {}
 
   ngOnInit() {
-    this.route.params
-    .subscribe(
-      (params: Params) => {
-        this.id = params['id'];
-        this.contact = this.contactService.getContact(this.id);
-      }
-    );
- }
+    this.route.params.subscribe((params: Params) => {
+      this.id = params['id'];
+      this.contactService.getContact(this.id).subscribe((contactData) => {
+        this.contact = contactData.contact;
+      });
+    });
+  }
 
- onDelete() {
-  this.contactService.deleteContact(this.contact);
-  this.router.navigate(['contacts']);
-}
-
+  onDelete() {
+    this.contactService.deleteContact(this.contact);
+    this.router.navigate(['/contacts']);
+  }
 }
