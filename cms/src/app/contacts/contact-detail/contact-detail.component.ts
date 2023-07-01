@@ -23,12 +23,14 @@ export class ContactDetailComponent implements OnInit {
       this.id = params['id'];
       this.contactService.getContact(this.id).subscribe((contactData) => {
         this.contact = contactData.contact;
+        console.log(this.contact);
       });
     });
   }
 
   onDelete() {
     this.contactService.deleteContact(this.contact);
-    this.router.navigate(['/contacts']);
+    console.log(this.contact);
+    this.router.navigate(['contacts']);
   }
 }

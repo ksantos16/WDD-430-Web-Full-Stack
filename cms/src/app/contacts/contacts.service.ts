@@ -98,7 +98,7 @@ export class ContactService {
     }
 
     this.http
-      .delete('htttp://localhost:3000/contacts/' + contact.id)
+      .delete('http://localhost:3000/contacts/' + contact.id)
       .subscribe((response: Response) => {
         this.contacts.splice(pos, 1);
         this.sendAndSort();

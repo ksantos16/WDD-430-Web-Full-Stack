@@ -7,29 +7,28 @@ import { WindRefService } from 'src/app/wind-ref.service';
 @Component({
   selector: 'cms-document-detail',
   templateUrl: './document-detail.component.html',
-  styleUrls: ['./document-detail.component.css']
+  styleUrls: ['./document-detail.component.css'],
 })
-export class DocumentDetailComponent implements OnInit{
-
+export class DocumentDetailComponent implements OnInit {
   document: Document;
   id: string;
   nativeWindow: any;
 
-  constructor(private documentService: DocumentsService,
-              private route: ActivatedRoute,
-              private router: Router,
-              private windowRefService: WindRefService) {
-                this.nativeWindow = windowRefService.getNativeWindow();
-              }
+  constructor(
+    private documentService: DocumentsService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private windowRefService: WindRefService
+  ) {
+    this.nativeWindow = windowRefService.getNativeWindow();
+  }
 
   ngOnInit() {
-    this.route.params
-    .subscribe(
-      (params: Params) => {
-        this.id = params['id'];
-        this.document = this.documentService.getDoument(this.id);
-      }
-    )
+    this.route.params.subscribe((params: Params) => {
+      this.id = params['id'];
+      this.document = this.documentService.getDoument(this.id);
+      console.log(this.document);
+    });
   }
 
   onView() {
@@ -41,6 +40,5 @@ export class DocumentDetailComponent implements OnInit{
   onDelete() {
     this.documentService.deleteDocument(this.document);
     this.router.navigate(['documents']);
- }
-
+  }
 }

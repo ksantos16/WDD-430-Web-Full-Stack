@@ -55,10 +55,10 @@ router.get('/:id', (req, res, next) => {
     "id": req.params.id
   })
   .populate('group')
-  .then(contacts => {
+  .then(contact => {
     res.status(200).json({
         message: 'Contacts fetched successfully!',
-        contacts: contacts
+        contact: contact
       });
   })
   .catch(error => {
@@ -119,8 +119,8 @@ router.delete("/:id", (req, res, next) => {
     })
     .catch(error => {
       res.status(500).json({
-        message: 'Conatct not found.',
-        error: { contact: 'Document not found'}
+        message: 'Contact not found.',
+        error: { contact: 'Contact not found'}
       });
     });
 });

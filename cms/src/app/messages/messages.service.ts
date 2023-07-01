@@ -4,7 +4,6 @@ import { Injectable, EventEmitter } from '@angular/core';
 import { Observable, map, Subject } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
-import { MOCKMESSAGES } from './MOCKMESSAGES';
 @Injectable({
   providedIn: 'root',
 })
@@ -23,7 +22,6 @@ export class MessagesService {
       return;
     }
 
-    // make sure id of the new Document is empty
     message.id = '';
 
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
@@ -36,19 +34,17 @@ export class MessagesService {
         { headers: headers }
       )
       .subscribe((responseData) => {
-        // add new document to documents
-        this.messages.push(responseData.messages);
-        this.send();
+        // add new message to messages
+        // this.messages.push(responseData.messages);
+        // this.send();
+        console.log(responseData);
+        this.messages = this.getMessages();
       });
   }
 
   getMessage(id: string): Message {
     return this.messages.find((message) => message.id == id);
   }
-
-  // getMessages(): Message[] {
-  //   return this.messages.slice();
-  // }
 
   getMessages() {
     this.http
@@ -64,5 +60,6 @@ export class MessagesService {
           console.log(error);
         }
       );
+    return this.messages;
   }
 }

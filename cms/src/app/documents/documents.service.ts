@@ -68,8 +68,8 @@ export class DocumentsService {
       if (document.id === id) {
         return document;
       }
-      return null;
     }
+    return null;
   }
 
   updateDocument(originalDocument: Document, newDocument: Document) {

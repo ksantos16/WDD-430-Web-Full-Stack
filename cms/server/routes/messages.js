@@ -1,102 +1,102 @@
-var express = require('express');
+var express = require("express");
 var router = express.Router();
-var sequenceGenerator = require('./sequenceGenerator');
+var sequenceGenerator = require("./sequenceGenerator");
 
-const Message = require('../models/message');
+const Message = require("../models/message");
 
-router.post('/', (req, res, next) => {
+router.post("/", (req, res, next) => {
   const maxMessageId = sequenceGenerator.nextId("messages");
 
   const message = new Message({
     id: maxMessageId,
     subject: req.body.subject,
     msgText: req.body.msgText,
-    sender: req.body.sender
+    sender: req.body.sender,
   });
 
-  message.save()
-    .then(createdMessage => {
+  console.log(message);
+  message
+    .save()
+    .then((message) => {
       res.status(201).json({
-        message: 'Message added successfully',
-        message: createdMessage
+        message: "Message added successfully",
+        messages: message,
       });
     })
-    .catch(error => {
-       res.status(500).json({
-          message: 'An error occurred',
-          error: error
-        });
+    .catch((error) => {
+      res.status(500).json({
+        message: "An error occurred line 26",
+        error: error,
+      });
     });
 });
 
-
-router.get('/', (req, res, next) => {
+router.get("/", (req, res, next) => {
   Message.find()
-  .then(messages => {
-    res.status(200)
-    .json({
-      message: 'Messages fetched sucessfully!',
-      messages: messages
+    .populate("sender")
+    .then((messages) => {
+      res.status(200).json({
+        message: "Messages fetched successfully!",
+        messages: messages,
+      });
+    })
+    .catch((error) => {
+      res.status(500).json({
+        message: "An error occurred",
+        error: error,
+      });
     });
-  })
-  .catch(error => {
-    res.status(500).json({
-       message: 'An error occurred',
-       error: error
-     });
- });
+  return this.message;
 });
 
-
-router.put('/:id', (req, res, next) => {
+router.put("/:id", (req, res, next) => {
   Message.findOne({ id: req.params.id })
-    .then(message => {
+    .then((message) => {
       message.subject = req.body.subject;
       message.msgText = req.body.msgText;
       message.sender = req.body.sender;
 
       Message.updateOne({ id: req.params.id }, message)
-        .then(result => {
+        .then((result) => {
           res.status(204).json({
-            message: 'Message updated successfully'
-          })
+            message: "Message updated successfully",
+          });
         })
-        .catch(error => {
-           res.status(500).json({
-           message: 'An error occurred',
-           error: error
-         });
+        .catch((error) => {
+          res.status(500).json({
+            message: "An error occurred",
+            error: error,
+          });
         });
     })
-    .catch(error => {
+    .catch((error) => {
       res.status(500).json({
-        message: 'Message not found.',
-        error: { message: 'Message not found'}
+        message: "Message not found.",
+        error: { message: "Message not found" },
       });
     });
 });
 
-
 router.delete("/:id", (req, res, next) => {
   Message.findOne({ id: req.params.id })
-    .then(message => {
+    .then((message) => {
       Message.deleteOne({ id: req.params.id })
-        .then(result => {
+        .then((result) => {
           res.status(204).json({
-            message: "Message deleted successfully"
+            message: "Message deleted successfully",
           });
         })
-        .catch(error => {
-           res.status(500).json({
-           message: 'An error occurred',
-           error: error
-         });
-        })
+        .catch((error) => {
+          res.status(500).json({
+            message: "An error occurred",
+            error: error,
+          });
+        });
     })
-    .catch(error => {
+    .catch((error) => {
       res.status(500).json({
-        message: 'Message not found.',
-        error: { message: 'Message not found'}
+        message: "Message not found.",
+        error: { message: "Message not found" },
       });
     });
 });
