@@ -4,14 +4,14 @@ import { Message } from '../message.model';
 @Component({
   selector: 'cms-message-item',
   templateUrl: './message-item.component.html',
-  styleUrls: ['./message-item.component.css']
+  styleUrls: ['./message-item.component.css'],
 })
-export class MessageItemComponent implements OnInit{
+export class MessageItemComponent implements OnInit {
   @Input() message: Message;
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit() {
+    // this.messageSender = this.message.sender.name;
   }
-
 }
