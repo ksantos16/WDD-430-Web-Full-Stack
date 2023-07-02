@@ -65,6 +65,15 @@ export class ContactService {
     );
   }
 
+  // getContact(id: string): Contact {
+  //   for (const contact of this.contacts) {
+  //     if (contact.id === id) {
+  //       return contact;
+  //     }
+  //   }
+  //   return null;
+  // }
+
   updateContact(originalContact: Contact, newContact: Contact) {
     if (!originalContact || !newContact) {
       return;
