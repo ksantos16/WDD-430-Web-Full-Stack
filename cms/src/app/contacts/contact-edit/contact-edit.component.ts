@@ -30,6 +30,9 @@ export class ContactEditComponent implements OnInit {
         this.editMode = false;
         return;
       }
+
+      // this.originalContact = this.contactService.getContact(this.id);
+
       this.originalContact = this.id = params['id'];
       this.contactService.getContact(this.id).subscribe((responseData) => {
         this.contact = responseData.contact;
