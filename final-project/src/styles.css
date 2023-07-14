@@ -1,1 +1,25 @@
-/* You can add global styles to this file, and also import other style files */
+body {
+  background-image: url('./assets/denise-jans-Lq6rcifGjOU-unsplash.jpg');
+  background-size: 100%;
+  word-wrap: break-word;
+}
+
+.navbar-collapse, .navbar-collapse, .navbar-collapse {
+  background-color: #461919;
+
+}
+
+.navbar-default, .navbar-nav> .active{
+  background-color: #461919;
+
+}
+
+.navbar-default .navbar-brand {
+  color: hsla(0,0%,100%,1);
+}
+
+.navbar-default .navbar-nav>.active>a, .navbar-default .navbar-nav>.active>a:focus, .navbar-default .navbar-nav>.active>a:hover {
+  color: #fff0f0;
+  background-color: #1d0c0c9a;
+}
+
